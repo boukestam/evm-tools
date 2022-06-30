@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/evm-tools/static/css/main.4892ec46.css",
+    "main.js": "/evm-tools/static/js/main.c5569ab0.js",
+    "static/js/787.a55255b4.chunk.js": "/evm-tools/static/js/787.a55255b4.chunk.js",
+    "index.html": "/evm-tools/index.html",
+    "main.4892ec46.css.map": "/evm-tools/static/css/main.4892ec46.css.map",
+    "main.c5569ab0.js.map": "/evm-tools/static/js/main.c5569ab0.js.map",
+    "787.a55255b4.chunk.js.map": "/evm-tools/static/js/787.a55255b4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4892ec46.css",
+    "static/js/main.c5569ab0.js"
+  ]
+}
