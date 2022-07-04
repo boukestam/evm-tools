@@ -5,7 +5,7 @@ import { BigNumber, ContractFunction, ethers } from 'ethers';
 import { useProvider } from '../../connectors';
 import { ImportedContract } from '../../store';
 import { getProperties } from '../../utils/parseABI';
-import { ContractValue } from './value';
+import { ContractProperty, ContractPropertyTable } from './property';
 
 async function fetchProperty(f: ContractFunction) {
   try {
@@ -15,18 +15,6 @@ async function fetchProperty(f: ContractFunction) {
     console.error(e);
     return e.reason || e.message || 'Unknown error';
   }
-}
-
-function ContractProperty({ name, values }: { name: string; values: any }) {
-  return (
-    <div className="flex px-4 py-3 text-sm bg-white border-b border-gray-200 even:bg-gray-50 odd:bg-gray-100">
-      <div className="flex-initial w-64">{name}</div>
-      <div>
-        {Array.isArray(values) &&
-          values.map((value, valueIndex) => <ContractValue value={value} key={valueIndex} />)}
-      </div>
-    </div>
-  );
 }
 
 function ContractProperties({ contract }: { contract: ImportedContract }) {
@@ -54,21 +42,18 @@ function ContractProperties({ contract }: { contract: ImportedContract }) {
   }, [contract, provider]);
 
   return (
-    <div className="overflow-hidden rounded shadow-md">
-      <div className="flex px-4 py-2 font-bold text-white bg-blue-500">
-        <div className="flex-initial w-64">Name</div>
-        <div className="flex-1">Value</div>
-      </div>
-
-      <div>
+    <>
+      <ContractPropertyTable className="mb-8">
         <ContractProperty name="Address" values={[contract.address]} />
         <ContractProperty name="Balance" values={[balance]} />
+      </ContractPropertyTable>
 
+      <ContractPropertyTable>
         {getProperties(contract.abi).map((view, viewIndex) => (
           <ContractProperty key={view.name} name={view.name} values={outputs[viewIndex]} />
         ))}
-      </div>
-    </div>
+      </ContractPropertyTable>
+    </>
   );
 }
 

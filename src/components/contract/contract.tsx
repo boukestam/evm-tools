@@ -49,8 +49,8 @@ function Contract() {
         </>
       ) : (
         <div className="flex flex-col items-center justify-center p-6 h-96">
-          <FaFileContract size={48} className="mb-4" />
-          <div>No contract selected</div>
+          <FaFileContract size={48} className="mb-4 text-gray-200" />
+          <div className="font-bold text-gray-300">No contract selected</div>
         </div>
       )}
     </div>

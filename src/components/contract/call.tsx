@@ -11,6 +11,7 @@ import { ABIFunction } from '../../utils/parseABI';
 import Button from '../button';
 import { Collapsable } from '../collapsable';
 import FormRow from '../form-row';
+import { ContractProperty, ContractPropertyTable } from './property';
 import { ContractValue } from './value';
 
 interface EthersError {
@@ -117,17 +118,22 @@ export default function ContractCall({
           </FormRow>
         ))}
 
-        <Button type="secondary" className="flex mt-2" onClick={fetch} disabled={loading}>
+        <Button type="primary" className="flex mt-2" onClick={fetch} disabled={loading}>
           {actionLabel}
         </Button>
 
-        <div className="mt-2">
-          {outputs.map((output, outputIndex) => (
-            <div key={outputIndex}>
-              {call.outputs[outputIndex].name || 'output' + outputIndex}:
-              <ContractValue value={output} />
-            </div>
-          ))}
+        <div className="mt-8">
+          {outputs.length > 0 && (
+            <ContractPropertyTable>
+              {outputs.map((output, outputIndex) => (
+                <ContractProperty
+                  key={outputIndex}
+                  name={call.outputs[outputIndex].name || 'output' + outputIndex}
+                  values={[output]}
+                />
+              ))}
+            </ContractPropertyTable>
+          )}
 
           {chainId && tx && (
             <div className="flex items-center mt-4">

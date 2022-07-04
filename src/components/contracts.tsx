@@ -9,26 +9,32 @@ function Contracts() {
   const { contracts, setSelectedContract } = useStore();
   const chainId = useChainId();
 
+  function filteredContracts() {
+    return contracts.filter(contract => contract.chainId === chainId);
+  }
+
   return (
     <>
       <ImportContract />
 
-      <div className="my-4 text-lg">Contracts</div>
+      {chainId && filteredContracts().length > 0 && (
+        <>
+          <div className="my-4 text-lg">Contracts</div>
 
-      <div>
-        {contracts
-          .filter(contract => contract.chainId === chainId)
-          .map(contract => (
-            <div
-              className="px-4 py-2 mb-2 bg-white border border-gray-300 rounded shadow-sm cursor-pointer hover:shadow-md hover:bg-gray-50"
-              onClick={() => setSelectedContract(contract)}
-              key={contract.address}
-            >
-              <div className="font-semibold">{contract.name}</div>
-              <div className="text-sm text-gray-500">{formatAddress(contract.address)}</div>
-            </div>
-          ))}
-      </div>
+          <div>
+            {filteredContracts().map(contract => (
+              <div
+                className="px-4 py-2 mb-2 bg-white border border-gray-300 rounded shadow-sm cursor-pointer hover:shadow-md hover:bg-gray-50"
+                onClick={() => setSelectedContract(contract)}
+                key={contract.address}
+              >
+                <div className="font-semibold">{contract.name}</div>
+                <div className="text-sm text-gray-500">{formatAddress(contract.address)}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 }

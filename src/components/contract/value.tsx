@@ -9,6 +9,7 @@ import { formatAddress } from '../../utils/formatAddress';
 function numberWithCommas(s: string) {
   const parts = s.split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  parts[1] = parts[1].substring(0, 2);
   return parts.join('.');
 }
 
@@ -25,15 +26,24 @@ export function ContractValue({ value, shorten }: { value: any; shorten?: boolea
   function toFormat(v: any) {
     if (v instanceof ethers.BigNumber) {
       if (v.gte(ethers.constants.WeiPerEther)) {
-        return numberWithCommas(ethers.utils.formatEther(v)).replace(/\.0+$/, '') + ' ether';
+        return (
+          <span>
+            <span className="group-hover:underline">
+              {numberWithCommas(ethers.utils.formatEther(v)).replace(/\.0+$/, '')}
+            </span>{' '}
+            <span className="text-xs text-gray-500">
+              × 10<sup>18</sup>
+            </span>
+          </span>
+        );
       }
     }
 
     if (typeof v === 'string' && v.startsWith('0x') && shorten) {
-      return formatAddress(v);
+      return <span className="group-hover:underline">{formatAddress(v)}</span>;
     }
 
-    return toString(v);
+    return <span className="group-hover:underline">{toString(v)}</span>;
   }
 
   return (
@@ -48,7 +58,7 @@ export function ContractValue({ value, shorten }: { value: any; shorten?: boolea
             addNotification('Error while copying');
           });
       }}
-      className="cursor-pointer hover:underline hover:opacity-80"
+      className="cursor-pointer group hover:opacity-80"
     >
       {toFormat(value)}
     </div>

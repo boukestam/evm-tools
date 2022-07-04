@@ -85,13 +85,13 @@ export default function ContractEvent({
         </Button>
 
         <div className="mt-2">
-          <table className="text-sm">
-            <thead>
+          <table className="overflow-hidden text-sm rounded shadow-md">
+            <thead className="font-bold text-white bg-blue-500">
               <tr>
-                <th className="pr-4">Date</th>
+                <th className="p-2">Date</th>
 
                 {event.inputs.map(input => (
-                  <th key={input.name} className="pr-4">
+                  <th key={input.name} className="p-2">
                     {input.name}
                   </th>
                 ))}
@@ -100,8 +100,11 @@ export default function ContractEvent({
 
             <tbody>
               {outputs.map((output, outputIndex) => (
-                <tr key={outputIndex}>
-                  <td className="pr-4 text-center">
+                <tr
+                  key={outputIndex}
+                  className="text-sm bg-white border-b border-gray-200 even:bg-gray-50 odd:bg-gray-100"
+                >
+                  <td className="p-2 text-center">
                     {formatDate(new Date(output.timestamp * 1000))}
                   </td>
 
